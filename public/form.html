@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTML 5 Boilerplate</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <!-- TODO: Refactor this page -->
+  <body>
+    <div class="w-full h-screen overflow-hidden bg-gray-900">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-full">
+        <div class="mx-auto max-w-3xl">
+          <!-- TODO: Invoke the PHP script to calculate the BMI with the user input -->
+          <form action="" method="post" class="-space-y-px my-12">
+            <div class="rounded-t-md bg-white/5 px-3 pt-2.5 pb-1.5 outline-1 -outline-offset-1 outline-gray-700 focus-within:relative focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-500">
+              <label for="height" class="block text-xs font-medium text-gray-200">Height</label>
+              <input id="height" type="text" name="height" placeholder="180 cm" class="block w-full bg-transparent text-white placeholder:text-gray-500 focus:outline-none sm:text-sm/6" />
+            </div>
+            <div class="rounded-b-md bg-white/5 px-3 pt-2.5 pb-1.5 outline-1 -outline-offset-1 outline-gray-700 focus-within:relative focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-500">
+              <label for="weight" class="block text-xs font-medium text-gray-200">Weight</label>
+              <input id="weight" type="text" name="weight" placeholder="80 kg" class="block w-full bg-transparent text-white placeholder:text-gray-500 focus:outline-none sm:text-sm/6" />
+            </div>
+            <div>
+              <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 mt-8">Calculate Your BMI</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
