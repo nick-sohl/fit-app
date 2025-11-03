@@ -7,4 +7,4 @@ services:
       - "8080:80" # Access app at http://localhost:8080
     volumes:
       - ./public:/var/www/html
-      - ./php:/var/www/html
+      - ./php:/var/www/html/php
