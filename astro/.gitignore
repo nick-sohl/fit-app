@@ -1,0 +1,39 @@
+# Node / dependencies
+node_modules/
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Build / output
+dist/
+.astro/
+build/
+
+# Local dev / caches
+.env
+.env.*            # e.g. .env.local, .env.production
+.vscode/
+.DS_Store
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE / misc
+.idea/
+*.swp
+*.swo
+
+# Astro / generated
+# ignore generated metadata if present
+.astro/
+.astro-tmp/
+# content collection caches
+*.cache*
+
+# Output from typescript, if used
+*.tsbuildinfo
+
+# Logs
+logs
+*.log
