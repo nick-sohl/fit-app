@@ -1,7 +1,11 @@
 ---
 // js code
+import NavbarComponent from "../components/NavbarComponent.astro";
+import PageHeadingComponent from "../components/PageHeadingComponent.astro";
+const { title } = Astro.props;
 ---
 
-<p>
-  Header Component
-</p>
+<header>
+  <NavbarComponent />
+  <PageHeadingComponent title={title} />
+</header>
