@@ -1,0 +1,12 @@
+---
+const { href, name, styles } = Astro.props;
+const isActive = href == Astro.url.pathname;
+---
+
+<a
+  href={href}
+  aria-current={isActive ? "page" : ""}
+  class={`rounded-md px-3 py-2 text-sm font-medium ${isActive ? "bg-gray-950/50 text-white" : "text-gray-300 hover:bg-white/5 hover:text-white"} ${styles}`}
+>
+  {name}
+</a>

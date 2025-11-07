@@ -1,21 +1,23 @@
 ---
-import HeaderComponent from '../components/HeaderComponent.astro';
-import FooterComponent from '../components/FooterComponent.astro';
+import "../styles/global.css";
+import HeaderComponent from "../components/HeaderComponent.astro";
+import FooterComponent from "../components/FooterComponent.astro";
 const { title } = Astro.props;
 ---
+
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
-  <body>
+  <body class="bg-gray-800">
     <!-- Header -->
-    <HeaderComponent title={title}/>
+    <HeaderComponent title={title} />
 
     <!-- Content -->
-    <article>
+    <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
       <slot />
-    </article>
+    </div>
 
     <!-- Footer -->
     <FooterComponent />
