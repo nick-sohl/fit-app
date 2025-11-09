@@ -75,9 +75,3 @@ where:
 
 2. Access in Browser
    <http://localhost/fit-app>
-
-🧑‍💻 Author
-
-[Nick Sohl]
-Last modified: [02. 11. 2025]
-Web Engineering WEE — Sprint 01
