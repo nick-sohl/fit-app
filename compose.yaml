@@ -1,3 +1,4 @@
+name: fitapp-astro-frontend
 services:
   astro:
     build: . # use Dockerfile to build the image
@@ -6,6 +7,8 @@ services:
     volumes:
       - ./:/app:rw # bind mount: lokales Repo -> /app im Container
       - /app/node_modules
+    networks:
+      - fitapp-network
 
   nginx:
     image: "nginx:stable-alpine-slim"
@@ -14,17 +17,18 @@ services:
     depends_on:
       - phpfpm
     networks:
-      - fitnet
+      - fitapp-network
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro # map file on host to file in docker container -> changes will be reflected in the container
+      - ./data:/var/www/data:ro # map files on host from data directory to the location in the nginx server in the docker container
 
   phpfpm:
     image: bitnami/php-fpm:latest
     networks:
-      - fitnet
+      - fitapp-network
     volumes:
       - ./php_script/calculate_bmi.php:/var/www/html/calculate_bmi.php:ro
 
 networks:
-  fitnet:
-    driver: bridge
+  fitapp-network:
+    external: true
