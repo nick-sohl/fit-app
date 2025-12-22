@@ -1,10 +1,13 @@
 import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 
+import vue from "@astrojs/vue";
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://nick-sohl.github.io',
   base: '/fit-app',
+
   vite: {
     plugins: [tailwindcss()],
     server: {
@@ -13,4 +16,6 @@ export default defineConfig({
       watch: { usePolling: true }
     }
   },
+
+  integrations: [vue()],
 });
