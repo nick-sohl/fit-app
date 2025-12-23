@@ -5,7 +5,7 @@ import vue from "@astrojs/vue";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://nick-sohl.github.io',
+  // site: 'https://nick-sohl.github.io',
   base: '/fit-app',
 
   vite: {
