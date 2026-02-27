@@ -20,7 +20,7 @@ services:
       - fitapp-network
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro # map file on host to file in docker container -> changes will be reflected in the container
-      - ./data:/var/www/data:ro # map files on host from data directory to the location in the nginx server in the docker container
+      - ./src/data:/var/www/data:ro # map files on host from data directory to the location in the nginx server in the docker container
 
   phpfpm:
     image: bitnami/php-fpm:latest
