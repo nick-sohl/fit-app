@@ -1,10 +1,31 @@
 ---
 import SiteBaseLayout from "../layouts/SiteBaseLayout.astro";
+
+import ButtonComponent from "../components/ButtonComponent.astro"
+
+// INFO: The result has to availabe outside of the try-catch block
+let result = null;
+const url = "http://nginx:80/data/statistics";
+try {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Response status: ${response.status}`);
+  }
+
+  result = await response.json();
+} catch (error) {
+  console.error(error.message);
+}
 ---
 
+
+<!-- INFO: The script runs on the client (browser) and is not inside the container! -->
 <script>
+  const csrBtn = document.querySelector('#csr-button');
+  const tbody = document.querySelector('#table-body');
+
   async function getData() {
-    const url = "http://172.20.0.7:80/data/statistics";
+    const url = "http://localhost:8080/data/statistics";
     try {
       const response = await fetch(url);
       if (!response.ok) {
@@ -12,13 +33,30 @@ import SiteBaseLayout from "../layouts/SiteBaseLayout.astro";
       }
 
       const result = await response.json();
-      console.log(result);
+
+      tbody.innerHTML = ""
+
+      // Set timeout to make client side fetch visisble
+      setTimeout( () => {
+        Object.entries(result.countries).map(([code, data]) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td class="px-3 py-4 text-sm text-indigo-400 whitespace-nowrap">${code}</td>
+            <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap">${data.rank ?? "–"}</td>
+            <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap">${data.both ?? "–"}</td>
+            <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap">${data.male ?? "–"}</td>
+            <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap">${data.female ?? "–"}</td>
+          `;
+          tbody.appendChild(row);
+        });
+      }
+      , 1000)
     } catch (error) {
       console.error(error.message);
     }
   }
 
-  getData();
+  csrBtn.addEventListener("click", getData);
 </script>
 
 <SiteBaseLayout title="Statistics">
@@ -29,6 +67,14 @@ import SiteBaseLayout from "../layouts/SiteBaseLayout.astro";
         <p class="mt-2 text-sm text-gray-300">
           Durchschnittliche BMI-Werte pro Land (Stand: 01.01.2024)
         </p>
+      </div>
+      <div>
+        <ButtonComponent
+          id="csr-button"
+          primary="true"
+          buttonText="Fetch Data Client Side"
+          buttonType="button"
+        />
       </div>
     </div>
 
@@ -41,11 +87,6 @@ import SiteBaseLayout from "../layouts/SiteBaseLayout.astro";
             <table class="relative min-w-full divide-y divide-white/15">
               <thead class="bg-gray-800/75">
                 <tr>
-                  <th
-                    scope="col"
-                    class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-200 sm:pl-6"
-                    >Land</th
-                  >
                   <th
                     scope="col"
                     class="px-3 py-3.5 text-left text-sm font-semibold text-gray-200"
@@ -74,149 +115,29 @@ import SiteBaseLayout from "../layouts/SiteBaseLayout.astro";
                 </tr>
               </thead>
 
-              <tbody class="divide-y divide-white/10 bg-gray-800/50">
-                <tr>
-                  <td
-                    class="py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-6 whitespace-nowrap"
-                    >Austria</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >AT</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >119</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >25.4</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >26.5</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >24.4</td
-                  >
-                </tr>
-                <tr>
-                  <td
-                    class="py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-6"
-                    >Belgium</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400">BE</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">114</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">25.5</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">26.2</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">24.7</td>
-                </tr>
-                <tr>
-                  <td
-                    class="py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-6"
-                    >Czechia</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400">CZ</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">55</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">26.3</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">27.0</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">25.6</td>
-                </tr>
-                <tr>
-                  <td
-                    class="py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-6"
-                    >France</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400">FR</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">124</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">25.3</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">26.1</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">24.6</td>
-                </tr>
-                <tr>
-                  <td
-                    class="py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-6"
-                    >Germany</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400">DE</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">79</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">26.3</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">27.0</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">25.6</td>
-                </tr>
-                <tr>
-                  <td
-                    class="py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-6"
-                    >Italy</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400">IT</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">94</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">26.0</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">26.8</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">25.2</td>
-                </tr>
-                <tr>
-                  <td
-                    class="py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-6"
-                    >Spain</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400">ES</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">63</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">26.7</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">27.4</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">26.0</td>
-                </tr>
-                <tr>
-                  <td
-                    class="py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-6"
-                    >Sweden</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400">SE</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">106</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">25.8</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">26.7</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">24.9</td>
-                </tr>
-                <tr>
-                  <td
-                    class="py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-6"
-                    >Switzerland</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400">CH</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">125</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">25.3</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">26.7</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">23.8</td>
-                </tr>
-                <tr>
-                  <td
-                    class="py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-6"
-                    >Turkey</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400">TR</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">31</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">27.8</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">27.1</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">28.5</td>
-                </tr>
-                <tr>
-                  <td
-                    class="py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-6"
-                    >United Kingdom</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400">GB</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">40</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">27.3</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">27.5</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">27.1</td>
-                </tr>
-                <tr>
-                  <td
-                    class="py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-6"
-                    >United States</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400">US</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">20</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">28.5</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">28.5</td>
-                  <td class="px-3 py-4 text-sm text-gray-400">28.5</td>
-                </tr>
+
+              <tbody id="table-body" class="divide-y divide-white/10 bg-gray-800/50">
+                {
+                  Object.entries(result.countries).map(([code, data]) => (
+                    <tr>
+                      <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
+                        >{ code }</td
+                      >
+                      <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
+                        >{ data.rank ?? "–" }</td
+                      >
+                      <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
+                          >{ data.both ?? "–" }</td
+                      >
+                      <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
+                          >{ data.male ?? "-" }</td
+                      >
+                      <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
+                          >{ data.female ?? "–" }</td
+                      >
+                    </tr>
+                  ))
+                }
               </tbody>
             </table>
           </div>

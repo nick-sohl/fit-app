@@ -44,7 +44,7 @@ import ButtonComponent from "./ButtonComponent.astro";
           primary="true"
           buttonText="Calculate Client Side"
         />
-        <ButtonComponent buttonText="Reset" buttonType="reset" />
+        <ButtonComponent id="reset-btn" buttonText="Reset" buttonType="reset" />
       </div>
     </form>
   </div>
@@ -56,6 +56,7 @@ import ButtonComponent from "./ButtonComponent.astro";
   const weightInput = document.querySelector("#bodyWeight") as HTMLInputElement;
   const heightInput = document.querySelector("#bodyHeight") as HTMLInputElement;
   const result = document.getElementById("result") as HTMLDivElement | null;
+  const resetBtn = document.querySelector("#reset-btn");
 
   btn.addEventListener("click", () => {
     const weight = parseFloat(weightInput.value);
@@ -69,4 +70,9 @@ import ButtonComponent from "./ButtonComponent.astro";
     const bmi = weight / (height / 100) ** 2;
     result!.textContent = `Your BMI is ${bmi.toFixed(1)}`;
   });
+
+  // reset result on form reset
+  resetBtn.addEventListener("click", () => {
+    result.innerHTML = "";
+  })
 </script>

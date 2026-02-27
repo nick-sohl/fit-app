@@ -1,5 +1,8 @@
 ---
 import SiteBaseLayout from "../layouts/SiteBaseLayout.astro";
+
+// INFO: Import the json data directly from the filesystem in the project repo
+import categories from "./data/categories.json"
 ---
 
 <SiteBaseLayout title="Categories">
@@ -50,139 +53,41 @@ import SiteBaseLayout from "../layouts/SiteBaseLayout.astro";
               </thead>
 
               <tbody class="divide-y divide-white/10 bg-gray-800/50">
-                <tr>
-                  <td
-                    class="py-4 pl-4 pr-3 text-sm font-medium text-white whitespace-nowrap sm:pl-6"
-                    >Untergewichtig</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >Sehr stark</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >—</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >&lt; 15.0</td
-                  >
-                </tr>
-                <tr>
-                  <td
-                    class="py-4 pl-4 pr-3 text-sm font-medium text-white whitespace-nowrap sm:pl-6"
-                  ></td>
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >Stark</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >15.0</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >&lt; 16.0</td
-                  >
-                </tr>
-                <tr>
-                  <td
-                    class="py-4 pl-4 pr-3 text-sm font-medium text-white whitespace-nowrap sm:pl-6"
-                  ></td>
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >Mässig</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >16.0</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >&lt; 17.0</td
-                  >
-                </tr>
-                <tr>
-                  <td
-                    class="py-4 pl-4 pr-3 text-sm font-medium text-white whitespace-nowrap sm:pl-6"
-                  ></td>
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >Leicht</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >17.0</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >&lt; 18.5</td
-                  >
-                </tr>
-
-                <tr>
-                  <td
-                    class="py-4 pl-4 pr-3 text-sm font-medium text-white whitespace-nowrap sm:pl-6"
-                    >Normalgewichtig</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >—</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >18.5</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >&lt; 25.0</td
-                  >
-                </tr>
-
-                <tr>
-                  <td
-                    class="py-4 pl-4 pr-3 text-sm font-medium text-white whitespace-nowrap sm:pl-6"
-                    >Übergewichtig</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >—</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >25.0</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >&lt; 30.0</td
-                  >
-                </tr>
-
-                <tr>
-                  <td
-                    class="py-4 pl-4 pr-3 text-sm font-medium text-white whitespace-nowrap sm:pl-6"
-                    >Fettleibig</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >Mässig (Grad I)</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >30.0</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >&lt; 35.0</td
-                  >
-                </tr>
-                <tr>
-                  <td
-                    class="py-4 pl-4 pr-3 text-sm font-medium text-white whitespace-nowrap sm:pl-6"
-                  ></td>
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >Stark (Grad II)</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >35.0</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >&lt; 40.0</td
-                  >
-                </tr>
-                <tr>
-                  <td
-                    class="py-4 pl-4 pr-3 text-sm font-medium text-white whitespace-nowrap sm:pl-6"
-                  ></td>
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >Sehr stark (Grad III)</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >40.0</td
-                  >
-                  <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
-                    >—</td
-                  >
-                </tr>
+                {
+                  categories.map((object) => (
+                    object.subCategories.length > 0 ? (
+                      object.subCategories.map((sub, index) => (
+                        <tr>
+                          <td class="py-4 pl-4 pr-3 text-sm font-medium text-white whitespace-nowrap sm:pl-6">
+                            {index === 0 ? object.name : ""}
+                          </td>
+                          <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
+                            >{sub.name}</td
+                          >
+                          <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
+                            >{sub.low ?? "–"}</td
+                          >
+                          <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
+                            >{sub.high ?? "–"}</td
+                          >
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td class="py-4 pl-4 pr-3 text-sm font-medium text-white whitespace-nowrap sm:pl-6">
+                          {object.name}
+                        </td>
+                        <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap">–</td>
+                        <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
+                          >{object.low ?? "–"}</td
+                        >
+                        <td class="px-3 py-4 text-sm text-gray-400 whitespace-nowrap"
+                          >{object.high ?? "–"}</td
+                        >
+                      </tr>
+                    )
+                  ))
+                }
               </tbody>
             </table>
           </div>
