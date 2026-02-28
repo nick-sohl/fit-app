@@ -3,19 +3,8 @@ import SiteBaseLayout from "../layouts/SiteBaseLayout.astro";
 
 import ButtonComponent from "../components/ButtonComponent.astro"
 
-// INFO: The result has to availabe outside of the try-catch block
-let result = null;
-const url = "http://nginx:80/data/statistics";
-try {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`Response status: ${response.status}`);
-  }
-
-  result = await response.json();
-} catch (error) {
-  console.error(error.message);
-}
+// INFO: Import the json data directly from the filesystem in the project repo
+import result from "../data/statistics.json"
 ---
 
 
