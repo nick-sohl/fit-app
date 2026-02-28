@@ -21,11 +21,20 @@ try {
 
 <!-- INFO: The script runs on the client (browser) and is not inside the container! -->
 <script>
+  const development = false;
   const csrBtn = document.querySelector('#csr-button');
   const tbody = document.querySelector('#table-body');
 
   async function getData() {
-    const url = "http://localhost:8080/data/statistics";
+    // INFO: On dev we run the nginx server in a docker container to server static files
+    if (development) {
+      const url = "http://localhost:8080/data/statistics";
+    } else {
+      // On prod (github) no docker container -> no ngixn werbserver
+      // We duplicated the statistics.json file into the public folder, so Astro serves it as static file
+      const url = "https://nick-sohl.github.io/fit-app/data/statistics.json"
+    }
+
     try {
       const response = await fetch(url);
       if (!response.ok) {
@@ -38,7 +47,7 @@ try {
 
       // Set timeout to make client side fetch visisble
       setTimeout( () => {
-        Object.entries(result.countries).map(([code, data]) => {
+        result?.countries && Object.entries(result.countries).map(([code, data]) => {
           const row = document.createElement("tr");
           row.innerHTML = `
             <td class="px-3 py-4 text-sm text-indigo-400 whitespace-nowrap">${code}</td>
